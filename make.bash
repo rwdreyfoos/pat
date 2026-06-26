@@ -73,6 +73,11 @@ echo
 echo "Building Pat v$VERSION..."
 go build -tags "$TAGS"
 
+# Copy binary into .app bundle on macOS
+if [[ "$OS" == "darwin"* ]] && [[ -d "Pat.app/Contents/MacOS" ]]; then
+	cp pat Pat.app/Contents/MacOS/pat
+fi
+
 # Build macOS pkg
 if [[ "$OS" == "darwin"* ]] && command -v packagesbuild >/dev/null 2>&1; then
 	ARCH=$(go env GOARCH)

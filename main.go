@@ -78,6 +78,10 @@ func runApp(opts app.Options, cmd app.Command, args []string, sig <-chan os.Sign
 	// Graceful shutdown/reload handling.
 	shouldReload := make(chan bool, 1)
 	done := make(chan struct{})
+	a.OnShutdown = func() {
+		cancel()
+		shouldReload <- false
+	}
 	a.OnReload = func() error {
 		// Avoid reloading of bad config
 		if _, err := app.LoadConfig(opts.ConfigPath, cfg.DefaultConfig); err != nil {

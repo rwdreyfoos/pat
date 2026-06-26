@@ -72,7 +72,8 @@ type Options struct {
 type App struct {
 	options  Options
 	config   cfg.Config
-	OnReload func() error
+	OnReload   func() error
+	OnShutdown func()
 
 	mbox     *mailbox.DirHandler
 	formsMgr *forms.Manager

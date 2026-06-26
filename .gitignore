@@ -1,6 +1,7 @@
 .build/
 pat
 pat*.pkg
+Pat.app/
 docker-data/
 .aider*
 *.swp

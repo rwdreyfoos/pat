@@ -89,6 +89,14 @@ $(function() {
     }
   });
 
+  // Quit button
+  $('#quitBtn').on('click', (e) => {
+    e.preventDefault();
+    if (confirm('Stop the Pat server?')) {
+      fetch('/api/shutdown', { method: 'POST' }).finally(() => window.close());
+    }
+  });
+
   initWs();
   mailbox.displayFolder('in');
   version.checkNewVersion();

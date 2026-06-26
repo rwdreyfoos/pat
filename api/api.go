@@ -109,6 +109,7 @@ func NewHandler(app *app.App) *Handler {
 	r.HandleFunc("/api/config/connect_aliases/{alias}", h.connectAliasHandler).Methods("GET", "PUT", "DELETE")
 
 	r.HandleFunc("/api/reload", h.reloadHandler).Methods("POST")
+	r.HandleFunc("/api/shutdown", h.shutdownHandler).Methods("POST")
 	r.HandleFunc("/api/bandwidths", h.bandwidthsHandler).Methods("GET")
 	r.HandleFunc("/api/connect_aliases", h.connectAliasesHandler).Methods("GET") // DEPRECATED: Use /api/config/connect_aliases.
 	r.HandleFunc("/api/new-release-check", h.newReleaseCheckHandler).Methods("GET")
@@ -440,6 +441,13 @@ func (h Handler) configHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	_ = json.NewEncoder(w).Encode("OK")
+}
+
+func (h Handler) shutdownHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	if h.App.OnShutdown != nil {
+		go h.App.OnShutdown()
+	}
 }
 
 func (h Handler) reloadHandler(w http.ResponseWriter, r *http.Request) {

@@ -390,7 +390,7 @@ var DefaultConfig = Config{
 		"telnet": "telnet://{mycall}:CMSTelnet@cms.winlink.org:8772/wl2k",
 	},
 	Listen:   []string{},
-	HTTPAddr: "localhost:8080",
+	HTTPAddr: "localhost:9000",
 	AX25: AX25Config{
 		Engine: DefaultAX25Engine(),
 		Beacon: BeaconConfig{
