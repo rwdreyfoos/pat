@@ -71,7 +71,7 @@ fi
 echo
 
 echo "Building Pat v$VERSION..."
-go build -tags "$TAGS"
+GOOS=$(go env GOOS) GOARCH=$(go env GOARCH) go build -buildvcs=false -tags "$TAGS"
 
 # Copy binary into .app bundle on macOS
 if [[ "$OS" == "darwin"* ]] && [[ -d "Pat.app/Contents/MacOS" ]]; then
